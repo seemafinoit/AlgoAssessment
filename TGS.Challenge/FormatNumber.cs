@@ -26,7 +26,7 @@ namespace TGS.Challenge
     {
         public string Format(int value)
         {
-            //Check if value is greater than 1000000000 or smaller than 0, then throw ArgumentException
+            //Check if value is greater than 1000000000 or smaller than 0, then throw ArgumentOutOfRangeException
             if (value < 0 || value > 1000000000)
                 throw new ArgumentOutOfRangeException();
 
