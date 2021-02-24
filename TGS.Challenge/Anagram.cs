@@ -1,3 +1,6 @@
+using System;
+using System.Text.RegularExpressions;
+
 namespace TGS.Challenge
 {
   /*
@@ -24,7 +27,39 @@ namespace TGS.Challenge
     {
       public bool AreAnagrams(string word1, string word2)
       {
-        return false;
-      }
+            //Check if word1 or word2 is null or empty then throw ArgumentException
+            if (string.IsNullOrEmpty(word1) || string.IsNullOrEmpty(word2))
+                throw new ArgumentException();
+
+            //size of array - 122 is ASCII value of z
+            int NO_OF_CHARS = 122;
+
+            //Replace all character by "", except a-z and 0-9
+            word1 = Regex.Replace(word1.ToLower(), @"[^a-z0-9]", "");
+            word2 = Regex.Replace(word2.ToLower(), @"[^a-z0-9]", "");
+
+            int[] count1 = new int[NO_OF_CHARS];
+            int[] count2 = new int[NO_OF_CHARS];
+
+            //Count number of times a character occurs in word
+            for (int i = 0; i < word1.Length && i < word2.Length; i++)
+            {
+                count1[word1[i]]++;
+                count2[word2[i]]++;
+            }
+
+            //Compare the length of words            
+            //if length is not equal, then return false
+            if (word1.Length != word2.Length)
+                return false;
+
+            //Compare the value of array at each index
+            //if it's not equal, then return false
+            for (int i = 0; i < NO_OF_CHARS; i++)
+                if (count1[i] != count2[i])
+                    return false;
+
+            return true;
+        }
     }
 }
