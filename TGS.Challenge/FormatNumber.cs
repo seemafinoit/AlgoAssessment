@@ -26,7 +26,37 @@ namespace TGS.Challenge
     {
         public string Format(int value)
         {
-            return string.Empty;
+            //Check if value is greater than 1000000000 or smaller than 0, then throw ArgumentException
+            if (value < 0 || value > 1000000000)
+                throw new ArgumentOutOfRangeException();
+
+            System.Text.StringBuilder builder = new System.Text.StringBuilder(value.ToString());
+            //if length is greater than 3 then we add comma
+            if (builder.Length > 3)
+            {
+                var reminder = builder.Length % 3;
+                var quotient = builder.Length / 3;
+                var noOfCommasInserted = 0;
+
+                /* Insert the first comma at index = reminder if reminder is greater than 0 
+                  and increament the value of noOfCommasInserted by 1 */
+                if (reminder > 0)
+                {
+                    builder.Insert(reminder, ',');
+                    noOfCommasInserted++;
+                }
+
+                /*insert comma after 3 digit from last comma
+                  and increament the value of noOfCommasInserted by 1 */
+                for (int i = 1; i < quotient; i++)
+                {
+                    reminder = reminder + noOfCommasInserted + 3;
+                    builder.Insert(reminder, ',');
+                    noOfCommasInserted++;
+                }
+            }
+
+            return builder.ToString();
         }
     }
 }
